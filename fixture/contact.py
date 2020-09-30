@@ -25,3 +25,10 @@ class ContactHelper:
         #Submit and return to Home page
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
         wd.find_element_by_link_text("home page").click()
+
+    def del_first(self):
+        wd = self.app.wd
+        # select first
+        wd.find_element_by_link_text("selected[]").click()
+        # Submit the deletion and return to Home page
+        wd.find_element_by_name("delete").click()
