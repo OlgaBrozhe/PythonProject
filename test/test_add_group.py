@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from group_form import GroupForm
-from application import Application
+from model.group_form import GroupForm
+from fixture.application import Application
 import pytest
 
 
