@@ -29,6 +29,7 @@ class ContactHelper:
     def del_first(self):
         wd = self.app.wd
         # select first
-        wd.find_element_by_link_text("selected[]").click()
+        wd.find_element_by_id("4").click()
         # Submit the deletion and return to Home page
-        wd.find_element_by_name("delete").click()
+        wd.find_element_by_name("Delete").click()
+        wd.switch_to_alert().accept()
