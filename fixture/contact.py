@@ -32,10 +32,16 @@ class ContactHelper:
 
     def del_first(self):
         wd = self.app.wd
+        self.navigate_to_home_page()
         #Delete first contact
         self.select_first_contact()
         wd.find_element_by_xpath("(//input[@value='Delete'])").click()
         wd.switch_to_alert().accept()
+
+    def navigate_to_home_page(self):
+        wd = self.app.wd
+        #Navigate to home page using menu
+        wd.find_element_by_link_text("home").click()
 
     def select_first_contact(self):
         wd = self.app.wd
@@ -44,6 +50,7 @@ class ContactHelper:
 
     def mod_first(self, contact_form):
         wd = self.app.wd
+        self.navigate_to_home_page()
         #Modify first contact and return to home page
         self.select_first_contact()
         wd.find_element_by_xpath("(//img[@alt='Edit'])").click()
