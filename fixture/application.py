@@ -14,6 +14,7 @@ class Application:
         self.contact = ContactHelper(self)
 
     def is_valid(self):
+    # Check if fixture is valid or invalid, e.g. browser failed
         try:
             self.wd.current_url
             return True

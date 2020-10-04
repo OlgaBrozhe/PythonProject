@@ -8,22 +8,23 @@ fixture = None
 @pytest.fixture
 def app(request):
     global fixture
-    #If fixture is valid:
+    # Initialise fixture, if it is valid:
     if fixture is None:
         fixture = Application()
-        fixture.session.login("admin", "secret")
-    #If fixture is invalid, e.g. browser failed
+    # Initialise fixture, if it is invalid, e.g. browser failed
     else:
         if not fixture.is_valid():
             fixture = Application()
-            fixture.session.login("admin", "secret")
+    # Login, if not currently logged in
+    fixture.session.ensure_login("admin", "secret")
     return fixture
 
 
-@pytest.fixture(scope = "session", autouse=True)
+@pytest.fixture(scope="session", autouse=True)
 def stop(request):
     def fin():
-        fixture.session.logout()
+        # Logout, if not currently logged out
+        fixture.session.ensure_logout()
         fixture.destroy()
     request.addfinalizer(fin)
     return fixture
