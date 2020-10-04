@@ -13,22 +13,21 @@ class ContactHelper:
 
     def fill_contact_form(self, contact_form):
         wd = self.app.wd
-        #Fill in contact info: first name, last name, email, company, mobile
-        wd.find_element_by_name("firstname").click()
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(contact_form.contact_name)
-        wd.find_element_by_name("lastname").click()
-        wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(contact_form.contact_lastname)
-        wd.find_element_by_name("email").click()
-        wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys(contact_form.contact_email)
-        wd.find_element_by_name("company").click()
-        wd.find_element_by_name("company").clear()
-        wd.find_element_by_name("company").send_keys(contact_form.contact_company)
-        wd.find_element_by_name("mobile").click()
-        wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys(contact_form.contact_mobile)
+        #Fill in contact info
+        self.change_field_value("firstname", contact_form.contact_name)
+        self.change_field_value("lastname", contact_form.contact_lastname)
+        self.change_field_value("email", contact_form.contact_email)
+        self.change_field_value("company", contact_form.contact_company)
+        self.change_field_value("mobile", contact_form.contact_mobile)
+
+    def change_field_value(self, field_title, field_value):
+        wd = self.app.wd
+        # Check if the field is going to be changed
+        if field_value is not None:
+            # Change the field value
+            wd.find_element_by_name(field_title).click()
+            wd.find_element_by_name(field_title).clear()
+            wd.find_element_by_name(field_title).send_keys(field_value)
 
     def del_first(self):
         wd = self.app.wd
@@ -48,13 +47,13 @@ class ContactHelper:
         #Select first contact from the contacts table
         wd.find_element_by_xpath("(//input[@name='selected[]'])").click()
 
-    def mod_first(self, contact_form):
+    def mod_first(self, mod_contact_data):
         wd = self.app.wd
         self.navigate_to_home_page()
         #Modify first contact and return to home page
         self.select_first_contact()
         wd.find_element_by_xpath("(//img[@alt='Edit'])").click()
-        self.fill_contact_form(contact_form)
+        self.fill_contact_form(mod_contact_data)
         wd.find_element_by_xpath("(//input[@value='Update'])").click()
         self.return_to_home_page()
 
