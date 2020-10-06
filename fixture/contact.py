@@ -1,3 +1,6 @@
+import time
+
+
 class ContactHelper:
 
     def __init__(self, app):
@@ -36,6 +39,7 @@ class ContactHelper:
         self.select_first_contact()
         wd.find_element_by_xpath("(//input[@value='Delete'])").click()
         wd.switch_to_alert().accept()
+        time.sleep(10)
 
     def navigate_to_home_page(self):
         wd = self.app.wd
@@ -61,3 +65,9 @@ class ContactHelper:
         wd = self.app.wd
         #Return to home page after creation or modification of a contact
         wd.find_element_by_link_text("home page").click()
+
+    def count(self):
+        wd = self.app.wd
+        self.navigate_to_home_page()
+        # Check if there are any elements to be selected on the current page
+        return len(wd.find_elements_by_xpath("(//input[@name='selected[]'])"))
