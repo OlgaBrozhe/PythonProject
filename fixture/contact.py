@@ -43,8 +43,10 @@ class ContactHelper:
 
     def navigate_to_home_page(self):
         wd = self.app.wd
-        #Navigate to home page using menu
-        wd.find_element_by_link_text("home").click()
+        # Check if the page is the home page
+        if not wd.current_url.endswith("addressbook/"):
+            #Navigate to home page using menu
+            wd.find_element_by_link_text("home").click()
 
     def select_first_contact(self):
         wd = self.app.wd
@@ -63,8 +65,10 @@ class ContactHelper:
 
     def return_to_home_page(self):
         wd = self.app.wd
-        #Return to home page after creation or modification of a contact
-        wd.find_element_by_link_text("home page").click()
+        # Check if the page is the home page
+        if not wd.current_url.endswith("addressbook/"):
+            #Return to home page after creation or modification of a contact
+            wd.find_element_by_link_text("home page").click()
 
     def count(self):
         wd = self.app.wd

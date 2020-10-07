@@ -53,8 +53,10 @@ class GroupHelper:
 
     def return_to_groups_page(self):
         wd = self.app.wd
-        # Return to groups page after creation, deletion or modification of a group
-        wd.find_element_by_link_text("group page").click()
+        # Check if the page is the groups page
+        if not (wd.current_url.endswith("/group.php") and len(wd.find_elements_by_name("new")) > 0):
+            # Return to groups page after creation, deletion or modification of a group
+            wd.find_element_by_link_text("group page").click()
 
     def open_groups_page(self):
         wd = self.app.wd
