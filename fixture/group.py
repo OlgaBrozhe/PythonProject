@@ -1,3 +1,6 @@
+from model.group_form import GroupForm
+
+
 class GroupHelper:
 
     def __init__(self, app):
@@ -70,3 +73,14 @@ class GroupHelper:
         self.open_groups_page()
         # Check if there are any elements to be selected on the current page
         return len(wd.find_elements_by_name("selected[]"))
+
+    def get_groups_list(self):
+        wd = self.app.wd
+        # Get list of groups on groups page (name and element id)
+        self.open_groups_page()
+        groups_list = []
+        for element in wd.find_elements_by_css_selector("span.group"):
+            text = element.text
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            groups_list.append(GroupForm(group_name=text, group_id=id))
+        return groups_list

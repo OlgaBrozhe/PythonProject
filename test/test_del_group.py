@@ -6,4 +6,8 @@ def test_del_first_group(app):
     if app.group.count() == 0:
         app.group.create(GroupForm(group_name="AutocreatedGroup"))
     # Delete first group
+    old_groups_list = app.group.get_groups_list()
     app.group.del_first()
+    new_groups_list = app.group.get_groups_list()
+    # Check if group was deleted
+    assert len(old_groups_list) - 1 == len(new_groups_list)
