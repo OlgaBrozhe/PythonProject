@@ -1,4 +1,5 @@
 import time
+from model.contact_form import ContactForm
 
 
 class ContactHelper:
@@ -75,3 +76,17 @@ class ContactHelper:
         self.navigate_to_home_page()
         # Check if there are any elements to be selected on the current page
         return len(wd.find_elements_by_xpath("(//input[@name='selected[]'])"))
+
+    def get_contacts_list(self):
+        wd = self.app.wd
+        # Get list of contacts on home page with contacts (name and element id)
+        self.navigate_to_home_page()
+        contacts_list = []
+        # Find rows in table
+        for row in wd.find_elements_by_xpath(".//tr[@name='entry']"):
+            # Find cell in row
+            id = row.find_element_by_name("selected[]").get_attribute("value")
+            firstname = row.find_element_by_xpath(".//td[3]").text
+            lastname = row.find_element_by_xpath(".//td[2]").text
+            contacts_list.append(ContactForm(contact_name=firstname, contact_lastname=lastname, contact_id=id))
+        return contacts_list
