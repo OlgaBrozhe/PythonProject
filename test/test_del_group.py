@@ -11,6 +11,6 @@ def test_del_first_group(app):
     new_groups_list = app.group.get_groups_list()
     # First check - if group was deleted at all
     assert len(old_groups_list) - 1 == len(new_groups_list)
-    # Second check - if exactly first group was deleted (compare lists before and after deletion)
+    # Second check - if remained groups are equal
     old_groups_list[0:1] = []
     assert old_groups_list == new_groups_list

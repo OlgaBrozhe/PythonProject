@@ -11,6 +11,6 @@ def test_del_first_contact(app):
     new_contacts_list = app.contact.get_contacts_list()
     # First check - if contact was deleted at all
     assert len(old_contacts_list) - 1 == len(new_contacts_list)
-    # Second check - compare lists before and after deletion
+    # Second check - if remained contacts are equal
     old_contacts_list[0:1] = []
     assert old_contacts_list == new_contacts_list

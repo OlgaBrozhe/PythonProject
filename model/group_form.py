@@ -17,9 +17,14 @@ class GroupForm:
         return "{}:{}".format(self.group_id, self.group_name)
 
     def __eq__(self, other):
-        return (self.group_id is None or other.group_id is None or self.group_id == other.group_id) and self.group_name == other.group_name
+        # Compare logically, not to use physical address of variables, thus just writing all lists variables
+        # should be equal. Also when describing adding of an item, it doesn`t come with id, so it is taken
+        # from "init" and is None, whereas in the new list it already has the id.
+        check_is_none = self.group_id is None or other.group_id is None
+        return (self.group_id == other.group_id or check_is_none) and self.group_name == other.group_name
 
     def id_or_max(self):
+        # To be able to sort lists by id if there is no id, such as "" or None
         if self.group_id:
             return int(self.group_id)
         else:

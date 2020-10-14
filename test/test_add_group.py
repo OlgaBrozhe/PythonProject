@@ -8,9 +8,8 @@ def test_add_group(app):
     new_groups_list = app.group.get_groups_list()
     # First check if group was created
     assert len(old_groups_list) + 1 == len(new_groups_list)
-    # Second check, lists comparison
+    # Append old list with new item, sort lists ascending and check if they are still equal
     old_groups_list.append(group)
-    # Compare lists sorted by id ascending
     assert sorted(old_groups_list, key=GroupForm.id_or_max) == sorted(new_groups_list, key=GroupForm.id_or_max)
 
 
@@ -21,7 +20,6 @@ def test_add_empty_group(app):
     new_groups_list = app.group.get_groups_list()
     # First check if group was created
     assert len(old_groups_list) + 1 == len(new_groups_list)
-    # Second check, just training lists comparison
+    # Append old list with new item, sort lists ascending and check if they are still equal
     old_groups_list.append(group)
-    # Compare lists sorted by id ascending
     assert sorted(old_groups_list, key=GroupForm.id_or_max) == sorted(new_groups_list, key=GroupForm.id_or_max)

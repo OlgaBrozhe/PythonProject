@@ -12,16 +12,15 @@ def test_mod_first_group_name(app):
         app.group.create(GroupForm(group_name="AutocreatedGroup"))
     # Modify first group name
     old_groups_list = app.group.get_groups_list()
-    # Write new id of the first group into old list for comparison purposes
     group = GroupForm(group_name="TestModGroupName")
+    # Ensure the id of the modified item will remain
     group.group_id = old_groups_list[0].group_id
     app.group.mod_first(group)
     new_groups_list = app.group.get_groups_list()
     # First check if group was modified meaning len is the same
     assert len(old_groups_list) == len(new_groups_list)
-    # Second check, lists comparison
+    # Change first item in old list with new item, sort lists ascending and check if they are still equal
     old_groups_list[0] = group
-    # Compare lists sorted by id ascending
     assert sorted(old_groups_list, key=GroupForm.id_or_max) == sorted(new_groups_list, key=GroupForm.id_or_max)
 
 # def test_mod_first_group_header(app):
