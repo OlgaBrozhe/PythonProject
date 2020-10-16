@@ -77,7 +77,7 @@ class ContactHelper:
     def count(self):
         wd = self.app.wd
         self.navigate_to_home_page()
-        # Check if there are any elements to be selected on the current page
+        # Check if there are any elements to be selected on the current page and how many
         return len(wd.find_elements_by_xpath("(//input[@name='selected[]'])"))
 
     contact_cache = None
