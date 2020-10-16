@@ -14,6 +14,7 @@ class GroupHelper:
         self.fill_group_form(group_form)
         wd.find_element_by_name("submit").click()
         self.return_to_groups_page()
+        self.group_cache = None
 
     def fill_group_form(self, group_form):
         wd = self.app.wd
@@ -38,6 +39,7 @@ class GroupHelper:
         self.select_first_group()
         wd.find_element_by_name("delete").click()
         self.return_to_groups_page()
+        self.group_cache = None
 
     def mod_first(self, mod_group_data):
         wd = self.app.wd
@@ -48,6 +50,7 @@ class GroupHelper:
         self.fill_group_form(mod_group_data)
         wd.find_element_by_name("update").click()
         self.return_to_groups_page()
+        self.group_cache = None
 
     def select_first_group(self):
         wd = self.app.wd
@@ -74,13 +77,18 @@ class GroupHelper:
         # Check if there are any elements to be selected on the current page
         return len(wd.find_elements_by_name("selected[]"))
 
+    group_cache = None
+
     def get_groups_list(self):
-        wd = self.app.wd
-        # Get list of groups on groups page (name and element id)
-        self.open_groups_page()
-        groups_list = []
-        for element in wd.find_elements_by_css_selector("span.group"):
-            text = element.text
-            id = element.find_element_by_name("selected[]").get_attribute("value")
-            groups_list.append(GroupForm(group_name=text, group_id=id))
-        return groups_list
+        # Cache handling
+        if self.group_cache is None:
+            wd = self.app.wd
+            # Get list of groups on groups page (name and element id)
+            self.open_groups_page()
+            self.group_cache = []
+            for element in wd.find_elements_by_css_selector("span.group"):
+                text = element.text
+                id = element.find_element_by_name("selected[]").get_attribute("value")
+                self.group_cache.append(GroupForm(group_name=text, group_id=id))
+        #return groups_list
+        return list(self.group_cache)

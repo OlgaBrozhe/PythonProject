@@ -14,6 +14,7 @@ class ContactHelper:
         self.fill_contact_form(contact_form)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
         self.return_to_home_page()
+        self.contact_cache = None
 
     def fill_contact_form(self, contact_form):
         wd = self.app.wd
@@ -40,6 +41,7 @@ class ContactHelper:
         self.select_first_contact()
         wd.find_element_by_xpath("(//input[@value='Delete'])").click()
         wd.switch_to_alert().accept()
+        self.contact_cache = None
         time.sleep(10)
 
     def navigate_to_home_page(self):
@@ -63,6 +65,7 @@ class ContactHelper:
         self.fill_contact_form(mod_contact_data)
         wd.find_element_by_xpath("(//input[@value='Update'])").click()
         self.return_to_home_page()
+        self.contact_cache = None
 
     def return_to_home_page(self):
         wd = self.app.wd
@@ -77,16 +80,19 @@ class ContactHelper:
         # Check if there are any elements to be selected on the current page
         return len(wd.find_elements_by_xpath("(//input[@name='selected[]'])"))
 
+    contact_cache = None
+
     def get_contacts_list(self):
-        wd = self.app.wd
-        # Get list of contacts on home page with contacts (name and element id)
-        self.navigate_to_home_page()
-        contacts_list = []
-        # Find rows in table
-        for row in wd.find_elements_by_xpath(".//tr[@name='entry']"):
-            # Find cell in row
-            id = row.find_element_by_name("selected[]").get_attribute("value")
-            firstname = row.find_element_by_xpath(".//td[3]").text
-            lastname = row.find_element_by_xpath(".//td[2]").text
-            contacts_list.append(ContactForm(contact_name=firstname, contact_lastname=lastname, contact_id=id))
-        return contacts_list
+        if self.contact_cache is None:
+            wd = self.app.wd
+            # Get list of contacts on home page with contacts (name and element id)
+            self.navigate_to_home_page()
+            self.contact_cache = []
+            # Find rows in table
+            for row in wd.find_elements_by_xpath(".//tr[@name='entry']"):
+                # Find cell in row
+                id = row.find_element_by_name("selected[]").get_attribute("value")
+                firstname = row.find_element_by_xpath(".//td[3]").text
+                lastname = row.find_element_by_xpath(".//td[2]").text
+                self.contact_cache.append(ContactForm(contact_name=firstname, contact_lastname=lastname, contact_id=id))
+        return list(self.contact_cache)
