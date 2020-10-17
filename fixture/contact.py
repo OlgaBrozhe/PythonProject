@@ -9,7 +9,7 @@ class ContactHelper:
 
     def create(self, contact_form):
         wd = self.app.wd
-        #Create a new contact and return to home page
+        # Create a new contact and return to home page
         wd.find_element_by_link_text("add new").click()
         self.fill_contact_form(contact_form)
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
@@ -18,7 +18,7 @@ class ContactHelper:
 
     def fill_contact_form(self, contact_form):
         wd = self.app.wd
-        #Fill in contact info
+        # Fill in contact info
         self.change_field_value("firstname", contact_form.contact_name)
         self.change_field_value("lastname", contact_form.contact_lastname)
         self.change_field_value("email", contact_form.contact_email)
@@ -34,11 +34,22 @@ class ContactHelper:
             wd.find_element_by_name(field_title).clear()
             wd.find_element_by_name(field_title).send_keys(field_value)
 
-    def del_first(self):
+    def del_by_index(self, index):
         wd = self.app.wd
         self.navigate_to_home_page()
-        #Delete first contact
-        self.select_first_contact()
+        # Delete contact
+        self.select_by_index(index)
+        wd.find_element_by_xpath("(//input[@value='Delete'])").click()
+        wd.switch_to_alert().accept()
+        self.contact_cache = None
+        time.sleep(10)
+
+    def del_first(self):
+        self.del_by_index(0)
+
+    def del_all(self):
+        wd = self.app.wd
+        wd.find_element_by_id("MassCB").click()
         wd.find_element_by_xpath("(//input[@value='Delete'])").click()
         wd.switch_to_alert().accept()
         self.contact_cache = None
@@ -48,30 +59,36 @@ class ContactHelper:
         wd = self.app.wd
         # Check if the page is the home page
         if not wd.current_url.endswith("addressbook/"):
-            #Navigate to home page using menu
+            # Navigate to home page using menu
             wd.find_element_by_link_text("home").click()
 
-    def select_first_contact(self):
+    def select_by_index(self, index):
         wd = self.app.wd
-        #Select first contact from the contacts table
-        wd.find_element_by_xpath("(//input[@name='selected[]'])").click()
+        # Select contact from the contacts table
+        wd.find_elements_by_xpath("(//input[@name='selected[]'])")[index].click()
 
-    def mod_first(self, mod_contact_data):
+    def select_first(self):
+        self.select_by_index(0)
+
+    def mod_by_index(self, index, mod_contact_data):
         wd = self.app.wd
         self.navigate_to_home_page()
-        #Modify first contact and return to home page
-        self.select_first_contact()
-        wd.find_element_by_xpath("(//img[@alt='Edit'])").click()
+        # Modify contact and return to home page
+        self.select_by_index(index)
+        wd.find_elements_by_xpath("(//img[@alt='Edit'])")[index].click()
         self.fill_contact_form(mod_contact_data)
         wd.find_element_by_xpath("(//input[@value='Update'])").click()
         self.return_to_home_page()
         self.contact_cache = None
 
+    def mod_first(self):
+        self.mod_by_index(0)
+
     def return_to_home_page(self):
         wd = self.app.wd
         # Check if the page is the home page
         if not wd.current_url.endswith("addressbook/"):
-            #Return to home page after creation or modification of a contact
+            # Return to home page after creation or modification of a contact
             wd.find_element_by_link_text("home page").click()
 
     def count(self):

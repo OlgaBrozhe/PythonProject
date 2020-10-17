@@ -32,30 +32,43 @@ class GroupHelper:
             wd.find_element_by_name(field_title).clear()
             wd.find_element_by_name(field_title).send_keys(field_value)
 
-    def del_first(self):
+    def del_by_index(self, index):
         wd = self.app.wd
-        # Delete first group and return to groups page
+        # Delete the group and return to groups page
         self.open_groups_page()
-        self.select_first_group()
+        self.select_by_index(index)
         wd.find_element_by_name("delete").click()
         self.return_to_groups_page()
         self.group_cache = None
 
-    def mod_first(self, mod_group_data):
+    def del_first(self):
+        # Delete the first group and return to groups page
+        self.del_by_index(0)
+
+    def mod_by_index(self, index, mod_group_data):
         wd = self.app.wd
-        # Modify first group and return to groups page
+        # Modify random group and return to groups page
         self.open_groups_page()
-        self.select_first_group()
+        self.select_by_index(index)
         wd.find_element_by_name("edit").click()
         self.fill_group_form(mod_group_data)
         wd.find_element_by_name("update").click()
         self.return_to_groups_page()
         self.group_cache = None
 
-    def select_first_group(self):
+    def mod_first(self):
+        # Modify first group and return to groups page
+        self.mod_by_index(0)
+
+    def select_by_index(self, index):
         wd = self.app.wd
         # Select first group from the group list
-        wd.find_element_by_name("selected[]").click()
+        wd.find_elements_by_name("selected[]")[index].click()
+
+    def select_first(self):
+        # Select first group from the group list
+        self.select_by_index(0)
+        #wd.find_element_by_name("selected[]").click()
 
     def return_to_groups_page(self):
         wd = self.app.wd
