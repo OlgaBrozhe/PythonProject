@@ -34,7 +34,12 @@ class SessionHelper:
     def is_logged_in_as(self, username):
         wd = self.app.wd
         # Check which credentials are used for login
-        return wd.find_element_by_xpath("//div[@id='top']/form/b").text == "("+username+")"
+        return self.get_logged_username() == username
+
+    def get_logged_username(self):
+        wd = self.app.wd
+        # Get username from inside the brackets, like (admin)
+        return wd.find_element_by_xpath("//div[@id='top']/form/b").text[1:-1]
 
     def is_logged_in(self):
         wd = self.app.wd

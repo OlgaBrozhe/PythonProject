@@ -50,7 +50,7 @@ class ContactHelper:
     def del_all(self):
         wd = self.app.wd
         wd.find_element_by_id("MassCB").click()
-        wd.find_element_by_xpath("(//input[@value='Delete'])").click()
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
         self.contact_cache = None
         time.sleep(10)
@@ -65,7 +65,7 @@ class ContactHelper:
     def select_by_index(self, index):
         wd = self.app.wd
         # Select contact from the contacts table
-        wd.find_elements_by_xpath("(//input[@name='selected[]'])")[index].click()
+        wd.find_elements_by_xpath("//input[@name='selected[]']")[index].click()
 
     def select_first(self):
         self.select_by_index(0)
@@ -75,9 +75,9 @@ class ContactHelper:
         self.navigate_to_home_page()
         # Modify contact and return to home page
         self.select_by_index(index)
-        wd.find_elements_by_xpath("(//img[@alt='Edit'])")[index].click()
+        wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
         self.fill_contact_form(mod_contact_data)
-        wd.find_element_by_xpath("(//input[@value='Update'])").click()
+        wd.find_element_by_xpath("//input[@value='Update']").click()
         self.return_to_home_page()
         self.contact_cache = None
 
@@ -95,7 +95,7 @@ class ContactHelper:
         wd = self.app.wd
         self.navigate_to_home_page()
         # Check if there are any elements to be selected on the current page and how many
-        return len(wd.find_elements_by_xpath("(//input[@name='selected[]'])"))
+        return len(wd.find_elements_by_xpath("//input[@name='selected[]']"))
 
     contact_cache = None
 
