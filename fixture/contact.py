@@ -1,5 +1,6 @@
 import time
 from model.contact_form import ContactForm
+import re
 
 
 class ContactHelper:
@@ -126,7 +127,7 @@ class ContactHelper:
     def open_contact_to_edit_by_index(self, index):
         wd = self.app.wd
         # Navigate to the Edit icon in the table
-        self.app.navigate_to_home_page()
+        self.navigate_to_home_page()
         row = wd.find_elements_by_name("entry")[index]
         cell = row.find_elements_by_tag_name("td")[7]
         cell.find_element_by_tag_name("a").click()
@@ -134,7 +135,7 @@ class ContactHelper:
     def open_contact_to_view_by_index(self, index):
         wd = self.app.wd
         # Navigate to the View icon in the table
-        self.app.navigate_to_home_page()
+        self.navigate_to_home_page()
         row = wd.find_elements_by_name("entry")[index]
         cell = row.find_elements_by_tag_name("td")[6]
         cell.find_element_by_tag_name("a").click()
@@ -150,4 +151,16 @@ class ContactHelper:
         workphone = wd.find_element_by_name("work").get_attribute("value")
         secondary_phone = wd.find_element_by_name("phone2").get_attribute("value")
         return ContactForm(contact_name=firstname, contact_lastname=lastname, contact_homephone=homephone,
-                           contact_mobile=mobile, contact_workphone=workphone, contact_secondary_phone=secondary_phone, contact_id=id)
+                           contact_mobile=mobile, contact_workphone=workphone, contact_secondary_phone=secondary_phone,
+                           contact_id=id)
+
+    def get_contact_phones_from_view_page(self, index):
+        wd = self.app.wd
+        self.open_contact_to_view_by_index(index)
+        text = wd.find_element_by_id("content").text
+        homephone = re.search("H: (.*)", text).group(1)
+        mobile = re.search("M: (.*)", text).group(1)
+        workphone = re.search("W: (.*)", text).group(1)
+        secondary_phone = re.search("P: (.*)", text).group(1)
+        return ContactForm(contact_homephone=homephone, contact_mobile=mobile, contact_workphone=workphone,
+                           contact_secondary_phone=secondary_phone)
