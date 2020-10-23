@@ -4,12 +4,15 @@ from sys import maxsize
 class ContactForm:
 
     def __init__(self, contact_name=None, contact_lastname=None, contact_email=None, contact_company=None,
-                 contact_mobile=None, contact_id=None):
+                 contact_homephone=None, contact_mobile=None, contact_workphone=None, contact_fax=None, contact_id=None):
         self.contact_name = contact_name
         self.contact_lastname = contact_lastname
         self.contact_email = contact_email
         self.contact_company = contact_company
+        self.contact_homephone = contact_homephone
         self.contact_mobile = contact_mobile
+        self.contact_workphone = contact_workphone
+        self.contact_fax = contact_fax
         self.contact_id = contact_id
 
     # Methods for contacts lists representation and comparison

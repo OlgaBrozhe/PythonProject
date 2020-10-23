@@ -42,23 +42,11 @@ def test_mod_contact_lastname(app):
     assert sorted(old_contacts_list, key=ContactForm.id_or_max) == sorted(new_contacts_list, key=ContactForm.id_or_max)
 
 
-# def test_mod_first_contact_email(app):
-#     # Check if any contact exist, and if not - create one, insert email
-#     if app.contact.count() == 0:
-#         app.contact.create(ContactForm(contact_email="AutocreatedContact"))
-#     # Modify first contact email
-#     app.contact.mod_first(ContactForm(contact_email="TestModContactEmail1"))
-#
-# def test_mod_first_contact_company(app):
-#     # Check if any contact exist, and if not - create one, insert company
-#     if app.contact.count() == 0:
-#         app.contact.create(ContactForm(contact_company="AutocreatedContact"))
-#     # Modify first contact company
-#     app.contact.mod_first(ContactForm(contact_company="TestModContactCompany1"))
-#
-# def test_mod_first_contact_mobile(app):
-#     # Check if any contact exist, and if not - create one, insert mobile
-#     if app.contact.count() == 0:
-#         app.contact.create(ContactForm(contact_mobile="AutocreatedContact"))
-#     # Modify first contact mobile
-#     app.contact.mod_first(ContactForm(contact_mobile="TestModContactMobile1"))
+#     self.change_field_value("firstname", contact_form.contact_name)
+#     self.change_field_value("lastname", contact_form.contact_lastname)
+#     self.change_field_value("email", contact_form.contact_email)
+#     self.change_field_value("company", contact_form.contact_company)
+#     self.change_field_value("home", contact_form.contact_homephone)
+#     self.change_field_value("mobile", contact_form.contact_mobile)
+#     self.change_field_value("work", contact_form.contact_workphone)
+#     self.change_field_value("fax", contact_form.contact_fax)

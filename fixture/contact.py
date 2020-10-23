@@ -23,7 +23,10 @@ class ContactHelper:
         self.change_field_value("lastname", contact_form.contact_lastname)
         self.change_field_value("email", contact_form.contact_email)
         self.change_field_value("company", contact_form.contact_company)
+        self.change_field_value("home", contact_form.contact_homephone)
         self.change_field_value("mobile", contact_form.contact_mobile)
+        self.change_field_value("work", contact_form.contact_workphone)
+        self.change_field_value("fax", contact_form.contact_fax)
 
     def change_field_value(self, field_title, field_value):
         wd = self.app.wd

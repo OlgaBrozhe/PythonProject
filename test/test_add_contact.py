@@ -3,7 +3,8 @@ from model.contact_form import ContactForm
 
 def test_add_contact(app):
     old_contacts_list = app.contact.get_contacts_list()
-    contact = ContactForm("TestUserName1", "TestUserLastName1", "TestUserEmail1", "TestUserCompany", "TestUserTelephoneMobile1")
+    contact = ContactForm("TestName", "TestLastName", "TestEmail", "TestCompany", "TestHomePhone", "TestMobile",
+                          "TestWorkPhone", "TestFax")
     app.contact.create(contact)
     # First check if group was created
     assert len(old_contacts_list) + 1 == app.contact.count()
