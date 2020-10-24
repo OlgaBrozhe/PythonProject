@@ -6,8 +6,8 @@ import re
 
 
 def random_string(prefix, maxlen):
-    # Picking symbols for random choice: ascii_letters, digits and a number spaces
-    symbols = string.ascii_letters + string.digits + " "*10
+    # Picking symbols for random choice: ascii_letters, digits, punctuation and a number spaces
+    symbols = string.ascii_letters + string.digits + string.punctuation + " "*10
     # Random choice of symbols, generated for cycle of random length, not higher than max length
     list_random_symbols = [random.choice(symbols) for i in range(random.randrange(maxlen))]
     random_string_from_symbols_list = prefix + "".join(list_random_symbols)
@@ -22,6 +22,12 @@ def random_string(prefix, maxlen):
 #     [GroupForm("", "", "")] + \
 #     [GroupForm(group_name=random_string("group_name_", 10), group_header=random_string("group_header_", 15),
 #                group_footer=random_string("group_footer_", 20)) for i in range(5)]
+# testdata = [
+#     GroupForm(group_name=group_name, group_header=group_header, group_footer=group_footer)
+#     for group_name in ["", random_string("group_name", 10)]
+#     for group_header in ["", random_string("group_header", 15)]
+#     for group_footer in ["", random_string("group_footer", 20)]
+#     ]
 testdata = [GroupForm(group_name="GN__ ", group_header=random_string("GH__", 15),
                       group_footer=random_string("GF__", 20)) for i in range(2)]
 
