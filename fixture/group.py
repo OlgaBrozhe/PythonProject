@@ -96,12 +96,12 @@ class GroupHelper:
         # Cache handling
         if self.group_cache is None:
             wd = self.app.wd
-            # Get list of groups on groups page (name and element id)
+            # Get list of groups on groups page (id, name)
             self.open_groups_page()
             self.group_cache = []
             for element in wd.find_elements_by_css_selector("span.group"):
-                text = element.text
                 id = element.find_element_by_name("selected[]").get_attribute("value")
-                self.group_cache.append(GroupForm(group_name=text, group_id=id))
+                text = element.text
+                self.group_cache.append(GroupForm(group_id=id, group_name=text))
         #return groups_list
         return list(self.group_cache)

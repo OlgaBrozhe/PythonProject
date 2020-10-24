@@ -14,7 +14,7 @@ class GroupForm:
     # Methods for groups lists representation and comparison
 
     def __repr__(self):
-        return "{}:{}".format(self.group_id, self.group_name)
+        return "{}:{}:{}:{}".format(self.group_id, self.group_name, self.group_header, self.group_footer)
 
     def __eq__(self, other):
         # Compare logically, not to use physical address of variables, thus just writing all lists variables
