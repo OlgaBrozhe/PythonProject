@@ -22,7 +22,7 @@ def random_string(prefix, maxlen):
 #     [GroupForm("", "", "")] + \
 #     [GroupForm(group_name=random_string("group_name_", 10), group_header=random_string("group_header_", 15),
 #                group_footer=random_string("group_footer_", 20)) for i in range(5)]
-testdata = [GroupForm(group_name="GN__ 1", group_header=random_string("GH__", 15),
+testdata = [GroupForm(group_name="GN__ ", group_header=random_string("GH__", 15),
                       group_footer=random_string("GF__", 20)) for i in range(2)]
 
 
@@ -41,14 +41,7 @@ def test_add_group(app, group):
     list2a = map(lambda x: clear(x), new_groups_list)
     list2 = sorted(list2a, key=GroupForm.id_or_max)
     assert list1 == list2
-    print(list1 == list2)
-    #
-    # all_phones_joined = "\n".join(filter(lambda x: x != "",
-    #                                      map(lambda x: clear(x),
-    #                                          filter(lambda x: x is not None, [all_phones.contact_homephone,
-    #                                                                           all_phones.contact_mobile,
-    #                                                                           all_phones.contact_workphone,
-    #                                                                           all_phones.contact_secondary_phone]))))
+
 
 def clear(s):
     return re.sub("[() -]", "", s)
