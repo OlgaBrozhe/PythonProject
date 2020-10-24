@@ -6,7 +6,7 @@ def test_mod_contact_name(app):
     # Check if any contact exist, and if not - create one, insert name
     if app.contact.count() == 0:
         app.contact.create(ContactForm(contact_name="AutocreatedContact"))
-    # Modify contact name
+    # Modify random contact name
     old_contacts_list = app.contact.get_contacts_list()
     index = randrange(len(old_contacts_list))
     contact = ContactForm(contact_name="TestModContactName1")
@@ -26,7 +26,7 @@ def test_mod_contact_lastname(app):
     # Check if any contact exist, and if not - create one, insert last name
     if app.contact.count() == 0:
         app.contact.create(ContactForm(contact_lastname="AutocreatedContact"))
-    # Modify contact last name
+    # Modify random contact last name
     old_contacts_list = app.contact.get_contacts_list()
     index = randrange(len(old_contacts_list))
     contact = ContactForm(contact_lastname="TestModContactLastName1")

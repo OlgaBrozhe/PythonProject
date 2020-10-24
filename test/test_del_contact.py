@@ -6,7 +6,7 @@ def test_del_contact(app):
     # Check if any contact exist, and if not - create one
     if app.contact.count() == 0:
         app.contact.create(ContactForm(contact_name="AutocreatedContact"))
-    # Delete contact
+    # Delete random contact
     old_contacts_list = app.contact.get_contacts_list()
     index = randrange(len(old_contacts_list))
     app.contact.del_by_index(index)

@@ -6,7 +6,7 @@ def test_mod_group_name(app):
     # Check if any group exist, and if not - create one, insert name
     if app.group.count() == 0:
         app.group.create(GroupForm(group_name="AutocreatedGroup"))
-    # Modify group name
+    # Modify random group name
     old_groups_list = app.group.get_groups_list()
     index = randrange(len(old_groups_list))
     group = GroupForm(group_name="TestModGroupName")
@@ -25,7 +25,7 @@ def test_mod_group_header(app):
     # Check if any group exist, and if not - create one, insert header
     if app.group.count() == 0:
         app.group.create(GroupForm(group_header="AutocreatedGroup"))
-    # Modify group header
+    # Modify random group header
     old_groups_list = app.group.get_groups_list()
     index = randrange(len(old_groups_list))
     group = GroupForm(group_header="TestModGroupHeader")
@@ -45,7 +45,7 @@ def test_mod_group_footer(app):
     # Check if any group exist, and if not - create one, insert footer
     if app.group.count() == 0:
         app.group.create(GroupForm(group_footer="AutocreatedGroup"))
-    # Modify group footer
+    # Modify random group footer
     old_groups_list = app.group.get_groups_list()
     index = randrange(len(old_groups_list))
     group = GroupForm(group_footer="TestModGroupFooter")
