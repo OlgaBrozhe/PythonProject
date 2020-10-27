@@ -6,7 +6,7 @@ class SessionHelper:
     def login(self, username, password):
         wd = self.app.wd
         # Open URL, insert credentials and submit login
-        self.app.open_home_page(url_addressbook="http://localhost/addressbook/")
+        self.app.open_home_page()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(username)
         wd.find_element_by_name("pass").clear()

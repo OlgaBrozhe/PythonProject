@@ -1,5 +1,4 @@
 from model.group_form import GroupForm
-import time
 
 
 class GroupHelper:
