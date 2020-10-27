@@ -7,7 +7,8 @@ import re
 
 def random_string(prefix, maxlen):
     # Picking symbols for random choice: ascii_letters, digits, punctuation and a number spaces
-    symbols = string.ascii_letters + string.digits + string.punctuation + " "*10
+    # symbols = string.ascii_letters + string.digits + string.punctuation + " "*10
+    symbols = string.ascii_letters + string.digits + " "*10
     # Random choice of symbols, generated for cycle of random length, not higher than max length
     list_random_symbols = [random.choice(symbols) for i in range(random.randrange(maxlen))]
     random_string_from_symbols_list = prefix + "".join(list_random_symbols)
@@ -28,15 +29,8 @@ def random_string(prefix, maxlen):
 #     for group_header in ["", random_string("group_header", 15)]
 #     for group_footer in ["", random_string("group_footer", 20)]
 #     ]
-
-
-# testdata = [GroupForm(group_name=random_string("GN__", 5), group_header=random_string("GH__", 10),
-#                       group_footer=random_string("GF__", 15)) for i in range(5)]
-
-# Test data for debug:
-testdata = [GroupForm(group_name="GN__", group_header=random_string("GH__", 10),
-                      group_footer=random_string("GF__", 15)) for i in range(6)]
-
+testdata = [GroupForm(group_name=random_string("GN__", 5), group_header=random_string("GH__", 10),
+                      group_footer=random_string("GF__", 15)) for i in range(5)]
 
 # Name of the parameter where to put the test data, where to take it from and its text representation
 @pytest.mark.parametrize("group", testdata, ids=[repr(x) for x in testdata])
@@ -48,19 +42,15 @@ def test_add_group(app, group):
     var2 = app.group.count()
     assert var1 == var2
     new_groups_list = app.group.get_groups_list()
-    # Append old list with new item, sort lists ascending and check if they are still equal
+    # Append old list with new item, clear and sort lists ascending and check if they are still equal
     old_groups_list.append(group)
-    # old_groups_list = [clear(x) for x in old_groups_list]
-    # new_groups_list = [clear(x) for x in new_groups_list]
-    # var3 = sorted(old_groups_list, key=GroupForm.id_or_max)
-    # var4 = sorted(new_groups_list, key=GroupForm.id_or_max)
     var3 = sorted([clear(x) for x in old_groups_list], key=GroupForm.id_or_max)
     var4 = sorted([clear(x) for x in new_groups_list], key=GroupForm.id_or_max)
     assert var3 == var4
 
 
 def clear(s):
-    testVal = re.sub("[() -]", "", s.group_name)
-    s.group_name = testVal
+    group_name_cleared = re.sub("[() -]", "", s.group_name)
+    s.group_name = group_name_cleared
     return s
 

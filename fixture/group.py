@@ -89,7 +89,6 @@ class GroupHelper:
 
     def count(self):
         wd = self.app.wd
-        time.sleep(5)
         self.open_groups_page()
         # Check if there are any elements to be selected on the current page and how many
         return len(wd.find_elements_by_name("selected[]"))
