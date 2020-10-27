@@ -28,26 +28,39 @@ def random_string(prefix, maxlen):
 #     for group_header in ["", random_string("group_header", 15)]
 #     for group_footer in ["", random_string("group_footer", 20)]
 #     ]
-testdata = [GroupForm(group_name="GN__ ", group_header=random_string("GH__", 15),
-                      group_footer=random_string("GF__", 20)) for i in range(2)]
 
 
-# Name of the parameter where to put the testdata, where to take the testdata from, text representation of the testdata
+# testdata = [GroupForm(group_name=random_string("GN__", 5), group_header=random_string("GH__", 10),
+#                       group_footer=random_string("GF__", 15)) for i in range(5)]
+
+# Test data for debug:
+testdata = [GroupForm(group_name="GN__", group_header=random_string("GH__", 10),
+                      group_footer=random_string("GF__", 15)) for i in range(6)]
+
+
+# Name of the parameter where to put the test data, where to take it from and its text representation
 @pytest.mark.parametrize("group", testdata, ids=[repr(x) for x in testdata])
 def test_add_group(app, group):
     old_groups_list = app.group.get_groups_list()
     app.group.create(group)
     # First check if group was created
-    assert len(old_groups_list) + 1 == app.group.count()
+    var1 = len(old_groups_list) + 1
+    var2 = app.group.count()
+    assert var1 == var2
     new_groups_list = app.group.get_groups_list()
     # Append old list with new item, sort lists ascending and check if they are still equal
     old_groups_list.append(group)
-    list1a = map(lambda x: clear(x), old_groups_list)
-    list1 = sorted(list1a, key=GroupForm.id_or_max)
-    list2a = map(lambda x: clear(x), new_groups_list)
-    list2 = sorted(list2a, key=GroupForm.id_or_max)
-    assert list1 == list2
+    # old_groups_list = [clear(x) for x in old_groups_list]
+    # new_groups_list = [clear(x) for x in new_groups_list]
+    # var3 = sorted(old_groups_list, key=GroupForm.id_or_max)
+    # var4 = sorted(new_groups_list, key=GroupForm.id_or_max)
+    var3 = sorted([clear(x) for x in old_groups_list], key=GroupForm.id_or_max)
+    var4 = sorted([clear(x) for x in new_groups_list], key=GroupForm.id_or_max)
+    assert var3 == var4
 
 
 def clear(s):
-    return re.sub("[() -]", "", s)
+    testVal = re.sub("[() -]", "", s.group_name)
+    s.group_name = testVal
+    return s
+

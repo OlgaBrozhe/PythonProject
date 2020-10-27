@@ -6,15 +6,22 @@ from fixture.contact import ContactHelper
 
 class Application:
 
-    def __init__(self):
-        self.wd = webdriver.Firefox()
-        self.wd.implicitly_wait(1)
+    def __init__(self, browser="firefox"):
+        if browser == "firefox":
+            self.wd = webdriver.Firefox()
+        elif browser == "chrome":
+            self.wd = webdriver.Chrome()
+        elif browser == "Edge":
+            self.wd = webdriver.Edge()
+        else:
+            raise ValueError("Unrecognised browser {}".format(browser))
+        self.wd.implicitly_wait(2)
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
 
     def is_valid(self):
-    # Check if fixture is valid or invalid, e.g. browser failed
+        # Check if fixture is valid or invalid, e.g. browser failed
         try:
             self.wd.current_url
             return True

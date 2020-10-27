@@ -1,4 +1,5 @@
 from model.group_form import GroupForm
+import time
 
 
 class GroupHelper:
@@ -13,6 +14,8 @@ class GroupHelper:
         wd.find_element_by_name("new").click()
         self.fill_group_form(group_form)
         wd.find_element_by_name("submit").click()
+        message_text = wd.find_element_by_class_name("msgbox").text
+        assert message_text[0:28] == "A new group has been entered"
         self.return_to_groups_page()
         self.group_cache = None
 
@@ -86,6 +89,7 @@ class GroupHelper:
 
     def count(self):
         wd = self.app.wd
+        time.sleep(5)
         self.open_groups_page()
         # Check if there are any elements to be selected on the current page and how many
         return len(wd.find_elements_by_name("selected[]"))
