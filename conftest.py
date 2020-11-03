@@ -2,6 +2,7 @@
 from fixture.application import Application
 import pytest
 import json
+import os.path
 
 
 fixture = None
@@ -14,14 +15,16 @@ def app(request):
     global cfg_target
     browser = request.config.getoption("--browser")
     if cfg_target is None:
-        with open(request.config.getoption("--cfg_target")) as config_file:
-            cfg_target = json.load(config_file)
-    username = request.config.getoption("--username")
-    password = request.config.getoption("--password")
+        # Get the path, where is the file located - dirname. Join the directory path with the file path
+        config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), request.config.getoption("--cfg_target"))
+        with open(config_file) as file_to_use:
+            cfg_target = json.load(file_to_use)
+    # username = request.config.getoption("--username")
+    # password = request.config.getoption("--password")
     # Create fixture 1. if it is not initialised or 2. if it is initialised but invalid, e.g. browser failed
     if fixture is None or not fixture.is_valid():
         fixture = Application(browser=browser, base_url=cfg_target["baseUrl"],
-                              username=username, password=password)
+                              username=cfg_target["username"], password=cfg_target["password"])
     # Login, if not currently logged in
     fixture.session.ensure_login()
     return fixture
@@ -40,5 +43,5 @@ def stop(request):
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox")
     parser.addoption("--cfg_target", action="store", default="cfg_target.json")
-    parser.addoption("--username", action="store")
-    parser.addoption("--password", action="store")
+    # parser.addoption("--username", action="store")
+    # parser.addoption("--password", action="store")
