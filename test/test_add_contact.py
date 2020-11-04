@@ -1,11 +1,9 @@
 from model.contact_form import ContactForm
-import pytest
 import re
-from data.data_contacts import testdata
 
 
-@pytest.mark.parametrize("contact", testdata, ids=[repr(x) for x in testdata])
-def test_add_contact(app, contact):
+def test_add_contact(app, json_data_contacts):
+    contact = json_data_contacts
     old_contacts_list = app.contact.get_contacts_list()
     app.contact.create(contact)
     # First check if contact was created

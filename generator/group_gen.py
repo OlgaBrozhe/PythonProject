@@ -2,7 +2,7 @@ from model.group_form import GroupForm
 import random
 import string
 import os.path
-import json
+import jsonpickle
 import getopt
 import sys
 
@@ -40,7 +40,6 @@ testdata = [GroupForm(group_name=random_string("GN__", 5), group_header=random_s
 # <..> from "../data/groups.json" means that we move up from generator file to root in 2 steps.
 data_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", f)
 # What to do with the opened file:
-with open(data_file, "w") as file_in_use:
-    # json.dumps turns structured data from the file into string of the json format
-    # Add default to represent our object (GroupForm) more simple for json, such as dictionary (__dict__ like __init__)
-    file_in_use.write(json.dumps(testdata, default=lambda x: x.__dict__, indent=2))
+with open(data_file, "w") as file_out:
+    jsonpickle.set_encoder_options("json", indent=2)
+    file_out.write(jsonpickle.encode(testdata))
