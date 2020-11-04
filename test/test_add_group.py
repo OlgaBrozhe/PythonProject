@@ -1,12 +1,15 @@
 from model.group_form import GroupForm
-import pytest
 import re
-from data.add_group import constant as testdata
 
 
 # Name of the parameter where to put the test data, where to take it from and its text representation
-@pytest.mark.parametrize("group", testdata, ids=[repr(x) for x in testdata])
-def test_add_group(app, group):
+# import pytest
+# from data.data_groups import testdata
+# @pytest.mark.parametrize("group", testdata, ids=[repr(x) for x in testdata])
+
+
+def test_add_group(app, data_groups):
+    group = data_groups
     old_groups_list = app.group.get_groups_list()
     app.group.create(group)
     # First check if group was created

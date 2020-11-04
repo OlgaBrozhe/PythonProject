@@ -3,6 +3,7 @@ from fixture.application import Application
 import pytest
 import json
 import os.path
+import importlib
 
 
 fixture = None
@@ -19,8 +20,6 @@ def app(request):
         config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), request.config.getoption("--cfg_target"))
         with open(config_file) as file_to_use:
             cfg_target = json.load(file_to_use)
-    # username = request.config.getoption("--username")
-    # password = request.config.getoption("--password")
     # Create fixture 1. if it is not initialised or 2. if it is initialised but invalid, e.g. browser failed
     if fixture is None or not fixture.is_valid():
         fixture = Application(browser=browser, base_url=cfg_target["baseUrl"],
@@ -43,5 +42,17 @@ def stop(request):
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox")
     parser.addoption("--cfg_target", action="store", default="cfg_target.json")
-    # parser.addoption("--username", action="store")
-    # parser.addoption("--password", action="store")
+
+
+def pytest_generate_tests(metafunc):
+    # To load test data - form fixture, use parameters with prefix "data_", but remove the prefix (first 5 symbols)
+    for fixture in metafunc.fixturenames:
+        if fixture.startswith("data_"):
+            testdata = load_from_module(fixture)
+            metafunc.parametrize(fixture, testdata, ids=[str(x) for x in testdata])
+
+
+def load_from_module(module):
+    return importlib.import_module("data.{}".format(module)).testdata
+
+

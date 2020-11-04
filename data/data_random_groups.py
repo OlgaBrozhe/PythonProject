@@ -3,11 +3,11 @@ import random
 import string
 
 
-constant = [
-        GroupForm(group_name="GN_"+str(1), group_header="GH_"+str(1), group_footer="GF_"+str(1)),
-        GroupForm(group_name="GN_"+str(2), group_header="GH_"+str(2), group_footer="GF_"+str(2)),
-        GroupForm(group_name="GN_"+str(3), group_header="GH_"+str(3), group_footer="GF_"+str(3))
-    ]
+# constant = [
+#         GroupForm(group_name="GN_"+str(1), group_header="GH_"+str(1), group_footer="GF_"+str(1)),
+#         GroupForm(group_name="GN_"+str(2), group_header="GH_"+str(2), group_footer="GF_"+str(2)),
+#         GroupForm(group_name="GN_"+str(3), group_header="GH_"+str(3), group_footer="GF_"+str(3))
+#     ]
 
 
 def random_string(prefix, maxlen):
@@ -39,6 +39,6 @@ def random_string(prefix, maxlen):
 #     for group_header in ["", random_string("group_header", 15)]
 #     for group_footer in ["", random_string("group_footer", 20)]
 #     ]
-# # Create random groups
-# testdata = [GroupForm(group_name=random_string("GN__", 5), group_header=random_string("GH__", 10),
-#                       group_footer=random_string("GF__", 15)) for i in range(5)]
+# Create random groups
+testdata = [GroupForm(group_name=random_string("GN__", 5), group_header=random_string("GH__", 10),
+                      group_footer=random_string("GF__", 15)) for i in range(5)]
