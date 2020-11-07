@@ -5,29 +5,45 @@ import json
 import jsonpickle
 import os.path
 import importlib
+from fixture.db import DbFixture
 
 
 fixture = None
 cfg_target = None
 
 
+def load_config(file):
+    global cfg_target
+    if cfg_target is None:
+        # Get the path, where the file is located - dirname. Join the directory path with the file path
+        config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), file)
+        with open(config_file) as file_to_use:
+            cfg_target = json.load(file_to_use)
+    return cfg_target
+
 @pytest.fixture
 def app(request):
     global fixture
-    global cfg_target
     browser = request.config.getoption("--browser")
-    if cfg_target is None:
-        # Get the path, where is the file located - dirname. Join the directory path with the file path
-        config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), request.config.getoption("--cfg_target"))
-        with open(config_file) as file_to_use:
-            cfg_target = json.load(file_to_use)
+    web_config = load_config(request.config.getoption("--cfg_target"))["web"]
     # Create fixture 1. if it is not initialised or 2. if it is initialised but invalid, e.g. browser failed
     if fixture is None or not fixture.is_valid():
-        fixture = Application(browser=browser, base_url=cfg_target["baseUrl"],
-                              username=cfg_target["username"], password=cfg_target["password"])
+        fixture = Application(browser=browser, base_url=web_config["baseUrl"],
+                              username=web_config["username"], password=web_config["password"])
     # Login, if not currently logged in
     fixture.session.ensure_login()
     return fixture
+
+
+@pytest.fixture(scope="session")
+def db(request):
+    db_config = load_config(request.config.getoption("--cfg_target"))["db"]
+    dbfixture = DbFixture(host=db_config["host"], name=db_config["name"],
+                          user=db_config["user"], password=db_config["password"])
+    def fin():
+        dbfixture.destroy()
+    request.addfinalizer(fin)
+    return dbfixture
 
 
 @pytest.fixture(scope="session", autouse=True)
