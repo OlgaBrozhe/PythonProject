@@ -11,7 +11,8 @@ class DbFixture:
         self.name = name
         self.user = user
         self.password = password
-        self.connection = pymysql.connect(host=host, database=name, user=user, password=password)
+        # autocommit=True to clear cache after each query
+        self.connection = pymysql.connect(host=host, database=name, user=user, password=password, autocommit=True)
 
     def get_db_groups_list(self):
         db_groups_list = []
