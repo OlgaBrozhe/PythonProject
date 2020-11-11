@@ -12,6 +12,7 @@ fixture = None
 cfg_target = None
 
 
+# Load configuration file
 def load_config(file):
     global cfg_target
     if cfg_target is None:
@@ -21,6 +22,8 @@ def load_config(file):
             cfg_target = json.load(file_to_use)
     return cfg_target
 
+
+# Load web configuration from the configuration file
 @pytest.fixture
 def app(request):
     global fixture
@@ -35,6 +38,7 @@ def app(request):
     return fixture
 
 
+# Load DB configuration from the configuration file
 @pytest.fixture(scope="session")
 def db(request):
     db_config = load_config(request.config.getoption("--cfg_target"))["db"]
@@ -46,6 +50,7 @@ def db(request):
     return dbfixture
 
 
+# Destroy/stop the fixture
 @pytest.fixture(scope="session", autouse=True)
 def stop(request):
     def fin():
@@ -56,11 +61,20 @@ def stop(request):
     return fixture
 
 
+# Define if check_ui option is requested
+@pytest.fixture
+def check_ui(request):
+    return request.config.getoption("--check_ui")
+
+
+# Parse test run options
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox")
     parser.addoption("--cfg_target", action="store", default="cfg_target.json")
+    parser.addoption("--check_ui", action="store_true")
 
 
+# Load test data from JSON file
 def pytest_generate_tests(metafunc):
     # To load test data - form fixture, use parameters with prefix "data_", but remove the prefix (first 5 symbols)
     for fixture in metafunc.fixturenames:

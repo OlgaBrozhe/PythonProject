@@ -1,7 +1,6 @@
-from time import sleep
-
 import pymysql.cursors
 from model.group_form import GroupForm
+from model.contact_form import ContactForm
 
 
 class DbFixture:
@@ -29,6 +28,23 @@ class DbFixture:
             cursor.close()
         return db_groups_list
 
+    def get_db_contacts_list(self):
+        db_contacts_list = []
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute('''select id, firstname, lastname, home, mobile, work, email, phone2 
+            from addressbook where deprecated="0000-00-00 00:00:00"''')
+            # for row in cursor.fetchall():
+            #     print(row)
+            for row in cursor:
+                (id, firstname, lastname, home, mobile, work, email, phone2) = row
+                db_contacts_list.append(ContactForm(contact_id=str(id), contact_name=firstname,
+                                                    contact_lastname=lastname, contact_homephone=home,
+                                                    contact_mobile=mobile, contact_workphone=work,
+                                                    contact_email=email, contact_secondary_phone=phone2))
+        finally:
+            cursor.close()
+        return db_contacts_list
+
     def destroy(self):
         self.connection.close()
-
