@@ -53,7 +53,8 @@ class ORMFixture:
                                contact_homephone=contact.contact_homephone, contact_mobile=contact.contact_mobile,
                                contact_workphone=contact.contact_workphone, contact_email=contact.contact_email,
                                contact_secondary_phone=contact.contact_secondary_phone)
-        return list(map(convert_contact, contacts))
+        converted_contacts = list(map(convert_contact, contacts))
+        return converted_contacts
 
     @db_session
     def get_db_groups_list(self):
@@ -74,5 +75,18 @@ class ORMFixture:
     @db_session
     def get_db_contacts_in_group(self, group):
         # get the group with a particular id and get contacts within this group
-        group_with_contacts = list(select(g for g in ORMFixture.ORMGroup if g.group_id == group.group_id))[0]
-        self.convert_contacts_to_model(group_with_contacts.contacts)
+        orm_group = self.find_group_in_table_by_id(group)
+        contacts_in_group = self.convert_contacts_to_model(orm_group.contacts)
+        return contacts_in_group
+
+    @db_session
+    def find_group_in_table_by_id(self, group):
+        return list(select(g for g in ORMFixture.ORMGroup if g.group_id == group.group_id))[0]
+
+    @db_session
+    def get_db_contacts_not_in_group(self, group):
+        # get the group with a particular id and get contacts within this group
+        orm_group = self.find_group_in_table_by_id(group)
+        contacts_not_in_group = self.convert_contacts_to_model(
+            select(c for c in ORMFixture.ORMContact if c.deprecated is None and orm_group not in c.groups))
+        return contacts_not_in_group
