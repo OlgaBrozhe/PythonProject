@@ -2,7 +2,7 @@
 from pony.orm import *
 from model.group_form import GroupForm
 from model.contact_form import ContactForm
-from pymysql.converters import decoders
+#from pymysql.converters import decoders
 
 
 # ORM - object relational mapping
@@ -15,6 +15,9 @@ class ORMFixture:
         group_name = Optional(str, column='group_name')
         group_header = Optional(str, column='group_header')
         group_footer = Optional(str, column='group_footer')
+        # To be able to get contacts in groups, (lazy) when we are addressing to them
+        contacts = Set(lambda: ORMFixture.ORMContact, table="address_in_groups", column="id",
+                       reverse="groups", lazy=True)
 
     class ORMContact(db.Entity):
         _table_ = 'addressbook'
@@ -28,9 +31,12 @@ class ORMFixture:
         contact_secondary_phone = Optional(str, column='phone2')
         #deprecated = Optional(datetime, column='deprecated')
         deprecated = Optional(str, column='deprecated')
+        groups = Set(lambda: ORMFixture.ORMGroup, table="address_in_groups", column="group_id",
+                     reverse="contacts", lazy=True)
 
     def __init__(self, host, name, user, password):
-        self.db.bind('mysql', host=host, database=name, user=user, password=password, conv=decoders)
+        # self.db.bind('mysql', host=host, database=name, user=user, password=password, conv=decoders)
+        self.db.bind('mysql', host=host, database=name, user=user, password=password)
         self.db.generate_mapping()
         sql_debug(True)
 
@@ -64,3 +70,9 @@ class ORMFixture:
         # SELECT `c`.`id`, `c`.`firstname`, `c`.`lastname`, `c`.`home`, `c`.`mobile`, `c`.`work`, `c`.`email`,
         # `c`.`phone2`, `c`.`deprecated`
         # FROM `addressbook` `c`
+
+    @db_session
+    def get_db_contacts_in_group(self, group):
+        # get the group with a particular id and get contacts within this group
+        group_with_contacts = list(select(g for g in ORMFixture.ORMGroup if g.group_id == group.group_id))[0]
+        self.convert_contacts_to_model(group_with_contacts.contacts)
