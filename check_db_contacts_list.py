@@ -1,6 +1,8 @@
-from fixture.db import DbFixture
+# from fixture.db import DbFixture
+from fixture.orm import ORMFixture
 
-db = DbFixture(host="127.0.0.1", name="addressbook", user="root", password="")
+#db = DbFixture(host="127.0.0.1", name="addressbook", user="root", password="")
+db = ORMFixture(host="127.0.0.1", name="addressbook", user="root", password="")
 
 try:
     groups_list = db.get_db_groups_list()
@@ -14,4 +16,5 @@ try:
     print("The number of contacts in the database is:")
     print(len(contacts_list))
 finally:
-    db.destroy()
+    #db.destroy()
+    pass
