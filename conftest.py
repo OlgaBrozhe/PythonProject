@@ -93,5 +93,3 @@ def load_from_module(module):
 def load_from_json(file):
     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "data/{}.json".format(file))) as file_in_use:
         return jsonpickle.decode(file_in_use.read())
-
-

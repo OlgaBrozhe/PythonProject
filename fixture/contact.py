@@ -50,6 +50,16 @@ class ContactHelper:
         self.contact_cache = None
         time.sleep(10)
 
+    def del_by_id(self, contact_id):
+        wd = self.app.wd
+        self.navigate_to_home_page()
+        # Delete contact
+        self.select_by_id(contact_id)
+        wd.find_element_by_xpath("(//input[@value='Delete'])").click()
+        wd.switch_to_alert().accept()
+        self.contact_cache = None
+        time.sleep(10)
+
     def del_first(self):
         self.del_by_index(0)
 
@@ -73,6 +83,11 @@ class ContactHelper:
         # Select contact from the contacts table
         wd.find_elements_by_xpath("//input[@name='selected[]']")[index].click()
 
+    def select_by_id(self, contact_id):
+        wd = self.app.wd
+        # Find element, where value=contact_id and select it
+        wd.find_element_by_css_selector("input[value='{}']".format(contact_id)).click()
+
     def select_first(self):
         self.select_by_index(0)
 
@@ -82,6 +97,18 @@ class ContactHelper:
         # Modify contact and return to home page
         self.select_by_index(index)
         wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
+        self.fill_contact_form(mod_contact_data)
+        wd.find_element_by_xpath("//input[@value='Update']").click()
+        self.return_to_home_page()
+        self.contact_cache = None
+
+    def mod_by_id(self, contact_id, mod_contact_data):
+        wd = self.app.wd
+        self.navigate_to_home_page()
+        # Modify contact and return to home page
+        self.select_by_id(contact_id)
+        #wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
+        wd.find_elements_by_xpath("//img[@alt='Edit']").click()
         self.fill_contact_form(mod_contact_data)
         wd.find_element_by_xpath("//input[@value='Update']").click()
         self.return_to_home_page()

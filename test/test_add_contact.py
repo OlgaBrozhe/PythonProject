@@ -2,13 +2,11 @@ from model.contact_form import ContactForm
 import re
 
 
-def test_add_contact(app, json_data_contacts):
+def test_add_contact(app, json_data_contacts, db):
     contact = json_data_contacts
-    old_contacts_list = app.contact.get_contacts_list()
+    old_contacts_list = db.get_db_contacts_list()
     app.contact.create(contact)
-    # First check if contact was created
-    assert len(old_contacts_list) + 1 == app.contact.count()
-    new_contacts_list = app.contact.get_contacts_list()
+    new_contacts_list = db.get_db_contacts_list()
     # Append old list with new item, clear and sort lists ascending and check if they are still equal
     old_contacts_list.append(contact)
     assert sorted([clear(x) for x in old_contacts_list], key=ContactForm.id_or_max) == \
