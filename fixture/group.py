@@ -67,6 +67,17 @@ class GroupHelper:
         self.return_to_groups_page()
         self.group_cache = None
 
+    def mod_by_id(self, group_id, mod_group_data):
+        wd = self.app.wd
+        # Modify group with given id and return to groups page
+        self.open_groups_page()
+        self.select_by_id(group_id)
+        wd.find_element_by_name("edit").click()
+        self.fill_group_form(mod_group_data)
+        wd.find_element_by_name("update").click()
+        self.return_to_groups_page()
+        self.group_cache = None
+
     def mod_first(self):
         # Modify first group and return to groups page
         self.mod_by_index(0)
