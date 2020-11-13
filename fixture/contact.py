@@ -106,9 +106,8 @@ class ContactHelper:
         wd = self.app.wd
         self.navigate_to_home_page()
         # Modify contact and return to home page
-        self.select_by_id(contact_id)
         #wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
-        wd.find_elements_by_xpath("//img[@alt='Edit']").click()
+        wd.find_element_by_xpath("//a[@href='edit.php?id={}']".format(str(contact_id))).click()
         self.fill_contact_form(mod_contact_data)
         wd.find_element_by_xpath("//input[@value='Update']").click()
         self.return_to_home_page()
