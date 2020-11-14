@@ -42,7 +42,8 @@ def random_phone(prefix, maxlen):
 
 
 testdata = [ContactForm(contact_name=random_string("CN__", 10), contact_lastname=random_string("CLN__",15),
-                        contact_email=random_string("CE__@", 20), contact_email2=random_string("CE2__@", 20),
+                        contact_address=random_string("CA__",15), contact_email=random_string("CE__@", 20),
+                        contact_email2=random_string("CE2__@", 20), contact_email3=random_string("CE3__@", 20),
                         contact_homephone=random_phone("+", 15), contact_mobile=random_phone("+", 15),
                         contact_workphone=random_phone("+", 15), contact_secondary_phone=random_phone("+", 15))
             for i in range(n)]

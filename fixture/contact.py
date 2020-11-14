@@ -147,7 +147,7 @@ class ContactHelper:
                 address = cells[3].text
                 all_emails = cells[4].text
                 all_phones = cells[5].text
-                self.contact_cache.append(ContactForm(contact_name=firstname, contact_lastname=lastname, contact_id=id,
+                self.contact_cache.append(ContactForm(contact_id=id, contact_name=firstname, contact_lastname=lastname,
                                                       contact_address=address, all_emails_from_home_page=all_emails,
                                                       all_phones_from_home_page=all_phones))
         contacts_list = list(self.contact_cache)
