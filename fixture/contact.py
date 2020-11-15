@@ -45,7 +45,7 @@ class ContactHelper:
         self.navigate_to_home_page()
         # Delete contact
         self.select_by_index(index)
-        wd.find_element_by_xpath("(//input[@value='Delete'])").click()
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
         self.contact_cache = None
         time.sleep(10)
@@ -55,7 +55,7 @@ class ContactHelper:
         self.navigate_to_home_page()
         # Delete contact
         self.select_by_id(contact_id)
-        wd.find_element_by_xpath("(//input[@value='Delete'])").click()
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
         self.contact_cache = None
         time.sleep(10)
@@ -90,6 +90,29 @@ class ContactHelper:
 
     def select_first(self):
         self.select_by_index(0)
+
+    def add_contact_to_group(self, contact_id, group_id):
+        wd = self.app.wd
+        self.navigate_to_home_page()
+        self.select_by_id(contact_id)
+        # Select_group
+        wd.find_element_by_name("to_group").click()
+        wd.find_element_by_xpath("(//option[@value='{}'])[2]".format(group_id)).click()
+        # Click "add to"
+        wd.find_element_by_name("add").click()
+
+    def remove_contact_from_group(self, contact_id, group_id):
+        wd = self.app.wd
+        self.navigate_to_home_page()
+        self.show_contacts_in_group(group_id)
+        self.select_by_id(contact_id)
+        wd.find_element_by_name("remove").click()
+
+    def show_contacts_in_group(self, group_id):
+        wd = self.app.wd
+        # Filter the contacts presented in the contacts table page (home page) by the group
+        wd.find_element_by_name("group").click()
+        wd.find_element_by_xpath("//option[@value='{}']".format(group_id)).click()
 
     def mod_by_index(self, index, mod_contact_data):
         wd = self.app.wd

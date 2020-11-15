@@ -7,7 +7,7 @@ try:
     # Point to the data stored in the database
     cursor = connection.cursor()
     # Query the data from the DB and print row by row
-    cursor.execute("select * from group_list")
+    cursor.execute("select * from address_in_groups")
     for row in cursor.fetchall():
         print(row)
 finally:
