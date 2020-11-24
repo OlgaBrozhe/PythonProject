@@ -1,0 +1,70 @@
+{
+  "uid" : "b1a8273437954620fa374b796ffaacdd",
+  "name" : "behaviors",
+  "children" : [ {
+    "name" : "test_add_group[None:GN__il M:GH__rPqi s  1:GF__vtJGi]",
+    "uid" : "52f4751462262981",
+    "parentUid" : "b1a8273437954620fa374b796ffaacdd",
+    "status" : "passed",
+    "time" : {
+      "start" : 1606244088249,
+      "stop" : 1606244091224,
+      "duration" : 2975
+    },
+    "flaky" : false,
+    "newFailed" : false,
+    "parameters" : [ "None:GN__il M:GH__rPqi s  1:GF__vtJGi" ]
+  }, {
+    "name" : "test_add_group[None:GN__:GH__ 8l88zK:GF__yNByO]",
+    "uid" : "7d2aa72ba492fe21",
+    "parentUid" : "b1a8273437954620fa374b796ffaacdd",
+    "status" : "passed",
+    "time" : {
+      "start" : 1606244091245,
+      "stop" : 1606244094125,
+      "duration" : 2880
+    },
+    "flaky" : false,
+    "newFailed" : false,
+    "parameters" : [ "None:GN__:GH__ 8l88zK:GF__yNByO" ]
+  }, {
+    "name" : "test_add_group[None:GN__w:GH__xrc:GF__UNFNU7qKfU]",
+    "uid" : "cd3d3741c7afec7e",
+    "parentUid" : "b1a8273437954620fa374b796ffaacdd",
+    "status" : "passed",
+    "time" : {
+      "start" : 1606244094140,
+      "stop" : 1606244097062,
+      "duration" : 2922
+    },
+    "flaky" : false,
+    "newFailed" : false,
+    "parameters" : [ "None:GN__w:GH__xrc:GF__UNFNU7qKfU" ]
+  }, {
+    "name" : "test_add_group[None:GN__U:GH__40 3e :GF__bmE iwGY AYP]",
+    "uid" : "f94ab72ae69aaa2f",
+    "parentUid" : "b1a8273437954620fa374b796ffaacdd",
+    "status" : "passed",
+    "time" : {
+      "start" : 1606244097093,
+      "stop" : 1606244099953,
+      "duration" : 2860
+    },
+    "flaky" : false,
+    "newFailed" : false,
+    "parameters" : [ "None:GN__U:GH__40 3e :GF__bmE iwGY AYP" ]
+  }, {
+    "name" : "test_add_group[None:GN__v:GH__Q 1gEW:GF__ FpNg]",
+    "uid" : "ca2e17f7b695e4dd",
+    "parentUid" : "b1a8273437954620fa374b796ffaacdd",
+    "status" : "passed",
+    "time" : {
+      "start" : 1606244099984,
+      "stop" : 1606244102840,
+      "duration" : 2856
+    },
+    "flaky" : false,
+    "newFailed" : false,
+    "parameters" : [ "None:GN__v:GH__Q 1gEW:GF__ FpNg" ]
+  } ]
+}

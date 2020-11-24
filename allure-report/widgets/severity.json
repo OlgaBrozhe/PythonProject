@@ -1,0 +1,51 @@
+[ {
+  "uid" : "ca2e17f7b695e4dd",
+  "name" : "test_add_group[None:GN__v:GH__Q 1gEW:GF__ FpNg]",
+  "time" : {
+    "start" : 1606244099984,
+    "stop" : 1606244102840,
+    "duration" : 2856
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "f94ab72ae69aaa2f",
+  "name" : "test_add_group[None:GN__U:GH__40 3e :GF__bmE iwGY AYP]",
+  "time" : {
+    "start" : 1606244097093,
+    "stop" : 1606244099953,
+    "duration" : 2860
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "cd3d3741c7afec7e",
+  "name" : "test_add_group[None:GN__w:GH__xrc:GF__UNFNU7qKfU]",
+  "time" : {
+    "start" : 1606244094140,
+    "stop" : 1606244097062,
+    "duration" : 2922
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "7d2aa72ba492fe21",
+  "name" : "test_add_group[None:GN__:GH__ 8l88zK:GF__yNByO]",
+  "time" : {
+    "start" : 1606244091245,
+    "stop" : 1606244094125,
+    "duration" : 2880
+  },
+  "status" : "passed",
+  "severity" : "normal"
+}, {
+  "uid" : "52f4751462262981",
+  "name" : "test_add_group[None:GN__il M:GH__rPqi s  1:GF__vtJGi]",
+  "time" : {
+    "start" : 1606244088249,
+    "stop" : 1606244091224,
+    "duration" : 2975
+  },
+  "status" : "passed",
+  "severity" : "normal"
+} ]

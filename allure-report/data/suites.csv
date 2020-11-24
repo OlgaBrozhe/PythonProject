@@ -1,0 +1,6 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Tue Nov 24 10:54:57 PST 2020","Tue Nov 24 10:54:59 PST 2020","2860","test","test_add_group","","","","test_add_group[None:GN__U:GH__40 3e :GF__bmE iwGY AYP]",""
+"passed","Tue Nov 24 10:54:51 PST 2020","Tue Nov 24 10:54:54 PST 2020","2880","test","test_add_group","","","","test_add_group[None:GN__:GH__ 8l88zK:GF__yNByO]",""
+"passed","Tue Nov 24 10:54:48 PST 2020","Tue Nov 24 10:54:51 PST 2020","2975","test","test_add_group","","","","test_add_group[None:GN__il M:GH__rPqi s  1:GF__vtJGi]",""
+"passed","Tue Nov 24 10:54:59 PST 2020","Tue Nov 24 10:55:02 PST 2020","2856","test","test_add_group","","","","test_add_group[None:GN__v:GH__Q 1gEW:GF__ FpNg]",""
+"passed","Tue Nov 24 10:54:54 PST 2020","Tue Nov 24 10:54:57 PST 2020","2922","test","test_add_group","","","","test_add_group[None:GN__w:GH__xrc:GF__UNFNU7qKfU]",""
